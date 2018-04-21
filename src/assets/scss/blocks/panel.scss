@@ -1,0 +1,21 @@
+.panel {
+
+  background-color: $bg-pink;
+
+  color: #ffffff;
+
+  opacity: 0.9;
+
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7);
+
+  h2 {
+    margin: 0;
+    margin-bottom: 20px;
+    margin-left: 20px;
+
+    font-size: 30px;
+    line-height: 42px;
+    text-transform: uppercase;
+  }
+}
+

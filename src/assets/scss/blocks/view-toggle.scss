@@ -1,0 +1,41 @@
+.view-toggle__link {
+  text-decoration: none;
+
+  width: 32px;
+  height: 32px;
+  &--active {
+    .view-toggle__icon {
+      &--list,
+      &--tile {
+        .view-toggle__icon--rectangle {
+          stroke-dashoffset: 0;
+        }
+      }
+    }
+  }
+  &:hover {
+    .view-toggle__icon {
+
+      &--rectangle {
+        stroke-dashoffset: 0;
+      }
+    }
+
+  }
+}
+.view-toggle__icon {
+  &--list {
+    .view-toggle__icon--rectangle {
+      transition: stroke-dashoffset .3s ease;
+      stroke-dasharray: 1989644;
+      stroke-dashoffset: 1989644;
+    }
+  }
+  &--tile {
+    .view-toggle__icon--rectangle {
+      transition: stroke-dashoffset .3s ease;
+      stroke-dasharray: 357032;
+      stroke-dashoffset: 357032;
+    }
+  }
+}
