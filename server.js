@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var serveStatic = require('serve-static');
 
 var server_port = process.env.PORT || 5000;
 
@@ -9,13 +10,14 @@ var server_port = process.env.PORT || 5000;
 
 app = express();
 
-app.use('/dist', express.static('dist'));
+app.use(serveStatic(__dirname + "/dist"));
+// app.use('/dist', express.static('dist'));
 
 console.log('dir name = ', __dirname)
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, './index.html'))
-});
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, './dist/index.html'))
+// });
 
 // app.listen(server_port, server_ip_address, function () {
 //   console.log('Listening on ' + server_ip_address + ', port ' + server_port)
