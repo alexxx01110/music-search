@@ -41,6 +41,8 @@
   display: flex;
   flex-direction: row;
 
+  cursor: pointer;
+
   text-decoration: none;
   color: #ffffff;
 }
@@ -52,12 +54,26 @@
 }
 .result__text {
   margin-left: 20px;
+  h3 {
+    margin-top: 8px;
+    margin-bottom: 5px;
+  }
+  p {
+    margin: 0;
+    margin-bottom: 10px;
+    line-height: 18px;
+  }
 }
 .result__footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   padding-top: 10px;
 
   border-top: 1px solid $bg-pinklight;
+}
+.result__counter {
+  margin: 0;
+  padding: 0;
 }

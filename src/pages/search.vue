@@ -4,7 +4,7 @@
 
     <div class="page-main__wrapper container-main">
       <search-box></search-box>
-      <image-box></image-box>
+      <item-box></item-box>
       <history-box></history-box>
     </div>
 
@@ -14,14 +14,14 @@
 
 <script>
 import searchBox from '../components/searchBox'
-import imageBox from '../components/imageBox'
+import itemBox from '../components/itemBox'
 import historyBox from '../components/historyBox'
 
 export default {
   name: 'searchPage',
   components: {
     searchBox,
-    imageBox,
+    itemBox,
     historyBox
   }
 }

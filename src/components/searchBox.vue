@@ -3,7 +3,8 @@
   <section class="container-main__item panel search-box">
     <h2>Search form</h2>
     <p class="search-box__description">Please select s search option:</p>
-    <form class="search-box__form">
+    <form class="search-box__form"
+          @submit.prevent="search(query)">
       <p class="search-box__checkbox-group">
         <label class="search-box__checkbox">
           <input class="visually-hidden"
@@ -26,7 +27,7 @@
           <input id="photo-id"
                  type="text"
                  name="photo_id"
-                 placeholder="1">
+                 v-model="query">
         </p>
         <button class="button" type="submit">Go</button>
       </div>
@@ -37,17 +38,22 @@
 
       </div>
 
-      <ul class="result__list result__list--tile">
+      <ul class="result__list"
+          :class="{'result__list--tile': getViewMode === 'tile'}"
+          v-if="getAllTracks">
 
-        <li class="result__item">
+        <li class="result__item" v-for="item of getPaginatedTracks(pageNumber, itemsPerPage)" :key="item.id">
 
-          <a href="#" class="result__link">
+          <a class="result__link"
+             @click="fetchSelectedTrack(item)">
             <div class="result__picture">
-              <img class="result__image" src="http://placehold.it/600/8e973b" alt="Result image">
+              <img class="result__image"
+                   :src="item.artwork_url | imageSize('500x500')"
+                   :alt="item.title">
             </div>
             <div class="result__text">
-              <h3>Album Title</h3>
-              <p>Album Description</p>
+              <h3>{{item.title}}</h3>
+              <p>{{item.description | truncate(80)}}</p>
             </div>
           </a>
 
@@ -57,22 +63,41 @@
 
       <div class="result__footer">
 
-        <div class="result__controls">
+        <div class="result__controls controls">
 
-          <a class="link link--arrowed" href="#">Next
-            <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+          <button class="controls__element controls__element--prev button-arrow"
+                  @click="prevPage()"
+                  :disabled="pageNumber === 0">
+            <svg class="button-arrow__icon button-arrow__icon--left" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <g fill="none" stroke="#FF4F7B" stroke-width="1.5" stroke-linejoin="round" stroke-miterlimit="10">
-                <circle class="arrow-icon--circle" cx="16" cy="16" r="15.12"></circle>
-                <path class="arrow-icon--arrow" d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
+                <circle class="button-arrow__outline" cx="16" cy="16" r="15.12"></circle>
+                <path class="button-arrow__image" d="M16 10l-6 6 6 6m8 -6l-14 0"></path>
               </g>
             </svg>
-          </a>
+            Prev
+          </button>
+
+          <button class="controls__element controls__element--prev button-arrow"
+                  @click="nextPage()"
+                  :disabled="pageNumber >= getPageCount(itemsPerPage)-1">
+            Next
+            <svg class="button-arrow__icon button-arrow__icon--right" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+              <g fill="none" stroke="#FF4F7B" stroke-width="1.5" stroke-linejoin="round" stroke-miterlimit="10">
+                <circle class="button-arrow__outline" cx="16" cy="16" r="15.12"></circle>
+                <path class="button-arrow__image" d="M16.14 9.93L22.21 16l-6.07 6.07M8.23 16h13.98"></path>
+              </g>
+            </svg>
+          </button>
 
         </div>
 
+        <p class="result__counter">Page <span>{{pageNumber + 1}}</span> of <span>{{getPageCount(itemsPerPage)}}</span></p>
+
         <div class="result__view-toggle view-toggle">
 
-          <a class="view-toggle__link" href="#">
+          <a class="view-toggle__link"
+             :class="{'view-toggle__link--active': getViewMode === 'list'}"
+             @click="changeViewMode('list')">
             <svg class="view-toggle__icon view-toggle__icon--list" xmlns="http://www.w3.org/2000/svg"  width="32" height="32" viewBox="0 0 509069 509069">
               <g fill="none" stroke="#FF4F7B" stroke-width="21658.1" stroke-linejoin="round" stroke-miterlimit="10">
                 <rect class="view-toggle__icon--rectangle" stroke-width="41658.1" x="5829" y="5828" width="497411" height="497411" rx="22911" ry="22666"/>
@@ -86,7 +111,9 @@
             </svg>
           </a>
 
-          <a class="view-toggle__link  view-toggle__link--active link" href="#">
+          <a class="view-toggle__link"
+             :class="{'view-toggle__link--active': getViewMode === 'tile'}"
+             @click="changeViewMode('tile')">
             <svg class="view-toggle__icon view-toggle__icon--tile" xmlns="http://www.w3.org/2000/svg"  width="32" height="32" viewBox="0 0 91350 91350">
               <g fill="none" stroke="#FF4F7B" stroke-width="4091.97" stroke-linejoin="round" stroke-miterlimit="10">
                 <rect class="view-toggle__icon--rectangle" stroke-width="8091.97" x="1046" y="1046" width="89258" height="89258" rx="4111" ry="4067"/>
@@ -106,7 +133,43 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
-  name: 'searchBox'
+  name: 'searchBox',
+  data () {
+    return {
+      query: null,
+      pageNumber: 0,
+      itemsPerPage: 6
+    }
+  },
+  methods: {
+    ...mapActions(['searchRequest', 'changeViewMode', 'loadViewMode', 'fetchSelectedTrack']),
+    search (query) {
+      this.pageNumber = 0
+      this.searchRequest(query)
+    },
+    nextPage () {
+      this.pageNumber++
+    },
+    prevPage () {
+      this.pageNumber--
+    }
+  },
+  computed: {
+    ...mapGetters(['getAllTracks', 'getPaginatedTracks', 'getPageCount', 'getViewMode', 'getQueryFromHistory'])
+  },
+  watch: {
+    getQueryFromHistory: function (query) {
+      this.pageNumber = 0
+      if (this.query !== query) {
+        this.query = query
+      }
+    }
+  },
+  created () {
+    this.loadViewMode()
+  }
 }
 </script>

@@ -1,0 +1,12 @@
+.history-box__list {
+  //list-style: none;
+  //margin: 0;
+  //margin-left: 20px;
+  //padding: 0;
+}
+.history-box__link {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
