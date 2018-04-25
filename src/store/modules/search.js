@@ -37,8 +37,8 @@ const getters = {
   },
   getPageCount (state) {
     return (itemsPerPage) => {
-      console.log('All items = ', state.searchResult.length)
-      console.log('Pages = ', Math.ceil(state.searchResult.length / itemsPerPage))
+      // console.log('All items = ', state.searchResult.length)
+      // console.log('Pages = ', Math.ceil(state.searchResult.length / itemsPerPage))
       return state.searchResult ? Math.ceil(state.searchResult.length / itemsPerPage) : 0
     }
   },
