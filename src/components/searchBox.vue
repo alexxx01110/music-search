@@ -42,7 +42,10 @@
           :class="{'result__list--tile': getViewMode === 'tile'}"
           v-if="getAllTracks">
 
-        <li class="result__item" v-for="item of getPaginatedTracks(pageNumber, itemsPerPage)" :key="item.id">
+        <li class="result__item"
+            v-for="item of getPaginatedTracks(pageNumber, itemsPerPage)"
+            :key="item.id"
+            :class="{'result__item--active': getSelectedTrack ? getSelectedTrack.id === item.id : false}">
 
           <a class="result__link"
              @click="fetchSelectedTrack(item)">
@@ -61,7 +64,7 @@
 
       </ul>
 
-      <div class="result__footer">
+      <div v-if="getAllTracks" class="result__footer">
 
         <div class="result__controls controls">
 
@@ -158,7 +161,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAllTracks', 'getPaginatedTracks', 'getPageCount', 'getViewMode', 'getQueryFromHistory'])
+    ...mapGetters(['getAllTracks', 'getPaginatedTracks', 'getPageCount', 'getViewMode', 'getQueryFromHistory', 'getSelectedTrack']),
   },
   watch: {
     getQueryFromHistory: function (query) {

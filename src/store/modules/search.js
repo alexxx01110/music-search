@@ -26,7 +26,7 @@ const actions = {
         console.log(err)
       })
   },
-  fetchSelectedTrack ({state, commit}, track) {
+  fetchSelectedTrack ({state, commit, dispatch}, track) {
     commit('SET_SELECTED_TRACK', track)
   }
 }
@@ -37,8 +37,6 @@ const getters = {
   },
   getPageCount (state) {
     return (itemsPerPage) => {
-      // console.log('All items = ', state.searchResult.length)
-      // console.log('Pages = ', Math.ceil(state.searchResult.length / itemsPerPage))
       return state.searchResult ? Math.ceil(state.searchResult.length / itemsPerPage) : 0
     }
   },
@@ -50,7 +48,13 @@ const getters = {
     }
   },
   getSelectedTrack (state) {
-    return state.selectedTrack
+    let selectedTrack = null
+    let streamUrl = {}
+    if (state.selectedTrack) {
+      streamUrl = {stream_url_secret: soundCloud.getStreamUrl(state.selectedTrack.id)}
+      selectedTrack = Object.assign(state.selectedTrack, streamUrl)
+    }
+    return selectedTrack
   }
 }
 
