@@ -2,31 +2,32 @@
 
   <section class="container-main__item panel search-box">
     <h2>Search form</h2>
-    <p class="search-box__description">Please select s search option:</p>
+    <p class="search-box__description">Please, type a search query:</p>
     <form class="search-box__form"
           @submit.prevent="search(query)">
-      <p class="search-box__checkbox-group">
-        <label class="search-box__checkbox">
-          <input class="visually-hidden"
-                 type="checkbox"
-                 name="by_album">
-          <span class="search-box__checkbox-indicator"></span>
-          By Album number
-        </label>
-        <label class="search-box__checkbox">
-          <input class="visually-hidden"
-                 type="checkbox"
-                 name="by_photo">
-          <span class="search-box__checkbox-indicator"></span>
-          By Album ID
-        </label>
-      </p>
+      <!--<p class="search-box__checkbox-group">-->
+        <!--<label class="search-box__checkbox">-->
+          <!--<input class="visually-hidden"-->
+                 <!--type="checkbox"-->
+                 <!--name="by_album">-->
+          <!--<span class="search-box__checkbox-indicator"></span>-->
+          <!--By Album number-->
+        <!--</label>-->
+        <!--<label class="search-box__checkbox">-->
+          <!--<input class="visually-hidden"-->
+                 <!--type="checkbox"-->
+                 <!--name="by_photo">-->
+          <!--<span class="search-box__checkbox-indicator"></span>-->
+          <!--By Album ID-->
+        <!--</label>-->
+      <!--</p>-->
       <div class="search-box__wrapper">
         <p class="search-box__input-group">
           <label class="visually-hidden" for="photo-id">Type Album ID</label>
           <input id="photo-id"
                  type="text"
                  name="photo_id"
+                 required
                  v-model="query">
         </p>
         <button class="button" type="submit">Go</button>
