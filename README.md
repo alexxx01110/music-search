@@ -1,6 +1,6 @@
 # galacoral_test_vue
 
-> A Vue.js project
+> This web-app is a exam task for Ladbrokes Coral Group. Created using Vue.js
 
 ## Build Setup
 
@@ -18,4 +18,4 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Working application on Heroku: https://galacoral-test-vue.herokuapp.com

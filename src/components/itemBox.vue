@@ -18,7 +18,10 @@
             </p>
 
             <div class="image-box__player">
-              <audio ref="audio" controls autoplay>
+              <audio ref="audio"
+                     @ended="nextTrack"
+                     controls
+                     autoplay>
                 <source :src="getSelectedTrack.stream_url_secret" type="audio/mpeg">
                 Your browser does not support the audio element.
               </audio>
@@ -47,6 +50,10 @@ export default {
   computed: {
     ...mapGetters(['getSelectedTrack'])
   },
+  methods: {
+    nextTrack () { console.log('Nex track...') }
+  },
+
   watch: {
     getSelectedTrack: function () {
       this.showed = !this.showed
