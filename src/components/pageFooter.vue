@@ -60,7 +60,7 @@
             <li class="social__item"><a href="#" class="social__link social__link--googleplus"><span class="visually-hidden">We are on Google Plus</span></a></li>
           </ul>
         </div>
-        <p class="page-footer__copyright">Copyright © 2009–2013 Cssauthor.com</p>
+        <p class="page-footer__copyright">Copyright © 2009–2018 Alex Morozov</p>
       </div>
     </div>
   </footer>

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import search from './modules/search'
-import view from './modules/view'
+import view from './modules/ui'
 import history from './modules/history'
 
 Vue.use(Vuex)

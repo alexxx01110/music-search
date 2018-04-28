@@ -35,3 +35,45 @@
     transform: scale(1);
   }
 }
+
+.flip-list {
+  &-enter-active,
+  &-leave-active {
+    transition: all 1s;
+  }
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+}
+.move-list {
+  &-leave-active {
+    position: absolute;
+  }
+  &-move {
+    transition: all 2s;
+  }
+}
+.list-complete {
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  &-leave-active {
+    position: absolute;
+  }
+}
+
+.list {
+  &-enter-active,
+  &-leave-active {
+    transition: all 1s;
+  }
+  &-enter,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}

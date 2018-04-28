@@ -1,8 +1,13 @@
 .history-box__list {
+  display: flex;
+  flex-direction: column;
   //list-style: none;
   //margin: 0;
   //margin-left: 20px;
   //padding: 0;
+}
+.history-box__item {
+  transition: all 1s;
 }
 .history-box__link {
   cursor: pointer;

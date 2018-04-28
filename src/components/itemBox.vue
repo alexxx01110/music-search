@@ -1,7 +1,7 @@
 <template>
   <section class="container-main__item panel item-box">
     <h2>Result Box</h2>
-    <!--<transition name="item-box__container">-->
+    <transition name="bounce">
 
       <div v-if="getSelectedTrack" class="item-box__container">
 
@@ -18,7 +18,7 @@
             </p>
 
             <div class="image-box__player">
-              <audio ref="audio" controls>
+              <audio ref="audio" controls autoplay>
                 <source :src="getSelectedTrack.stream_url_secret" type="audio/mpeg">
                 Your browser does not support the audio element.
               </audio>
@@ -30,7 +30,7 @@
 
       </div>
 
-    <!--</transition>-->
+    </transition>
   </section>
 </template>
 

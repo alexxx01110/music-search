@@ -3,12 +3,15 @@
     <div class="page-header__logo">
       <img src="../assets/img/logo.svg" width="130" height="85" alt="Logo">
       <div class="page-header__title">
-        <h1>Welcome to pink</h1>
-        <p>A multi purpose theme from cssauthor.com</p>
+        <h1>Alex Morozov exam</h1>
+        <p>A SoundCloud search application that uses Vue.js</p>
       </div>
     </div>
-    <nav class="main-nav main-nav--closed">
-      <button class="main-nav__toggle" type="button">
+    <nav class="main-nav"
+         :class="[getMainMenuState ? 'main-nav--opened' : 'main-nav--closed']">
+      <button class="main-nav__toggle"
+              type="button"
+              @click="toggleMainMenu()">
         <span class="visually-hidden">Open Menu</span>
       </button>
       <div class="main-nav__wrapper">
@@ -55,11 +58,18 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'pageHeader',
   data () {
     return {
     }
+  },
+  methods: {
+    ...mapActions(['toggleMainMenu'])
+  },
+  computed: {
+    ...mapGetters(['getMainMenuState'])
   }
 }
 </script>

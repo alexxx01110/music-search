@@ -1,12 +1,17 @@
 <template>
   <section class="container-main__item panel history-box">
     <h2>User history</h2>
-    <ul class="history-box__list">
+
+    <transition-group class="history-box__list" name="list-complete" tag="ul">
+
       <li class="history-box__item"
-          v-for="(query, index) of getUserHistory" :key="index">
-        <a class="history-box__link" @click="searchFromHistory(query)">{{ query }}</a>
+          v-for="(query, index) of getUserHistory"
+          :key="index + query">
+          <a class="history-box__link" @click="searchFromHistory(query)">{{ query }}</a>
       </li>
-    </ul>
+
+    </transition-group>
+
   </section>
 </template>
 

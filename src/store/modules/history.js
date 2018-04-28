@@ -1,3 +1,5 @@
+import { removeArrayItem } from '../../system/helpers'
+
 const state = {
   userHistory: [],
   query: ''
@@ -23,11 +25,14 @@ const mutations = {
 const actions = {
   writeUserHistory ({state, commit}, data) {
     const maxHistorySize = 5
-    if (state.userHistory.length <= maxHistorySize) {
-      commit('ADD_FIRST_TO_HISTORY', data)
-    } else {
-      commit('DELETE_LAST_FROM_HISTORY')
-      commit('ADD_FIRST_TO_HISTORY', data)
+    if (state.userHistory[0] !== data) {
+      removeArrayItem(state.userHistory, data)
+      if (state.userHistory.length <= maxHistorySize) {
+        commit('ADD_FIRST_TO_HISTORY', data)
+      } else {
+        commit('DELETE_LAST_FROM_HISTORY')
+        commit('ADD_FIRST_TO_HISTORY', data)
+      }
     }
   },
   loadUserHistory ({state, commit}) {
