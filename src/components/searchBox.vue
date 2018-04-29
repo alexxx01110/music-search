@@ -44,7 +44,7 @@
           v-if="getAllTracks">
 
         <li class="result__item"
-            v-for="item of getPaginatedTracks(pageNumber, itemsPerPage)"
+            v-for="item of getPaginatedTracks"
             :key="item.id"
             :class="{'result__item--active': getSelectedTrack ? getSelectedTrack.id === item.id : false}">
 
@@ -71,7 +71,7 @@
 
           <button class="controls__element controls__element--prev button-arrow"
                   @click="prevPage()"
-                  :disabled="pageNumber === 0">
+                  :disabled="getPageNumber === 0">
             <svg class="button-arrow__icon button-arrow__icon--left" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <g fill="none" stroke="#FF4F7B" stroke-width="1.5" stroke-linejoin="round" stroke-miterlimit="10">
                 <circle class="button-arrow__outline" cx="16" cy="16" r="15.12"></circle>
@@ -83,7 +83,7 @@
 
           <button class="controls__element controls__element--prev button-arrow"
                   @click="nextPage()"
-                  :disabled="pageNumber >= getPageCount(itemsPerPage)-1">
+                  :disabled="!willPaginate">
             Next
             <svg class="button-arrow__icon button-arrow__icon--right" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
               <g fill="none" stroke="#FF4F7B" stroke-width="1.5" stroke-linejoin="round" stroke-miterlimit="10">
@@ -95,7 +95,7 @@
 
         </div>
 
-        <p class="result__counter">Page <span>{{pageNumber + 1}}</span> of <span>{{getPageCount(itemsPerPage)}}</span></p>
+        <p class="result__counter">Page <span>{{getPageNumber + 1}}</span> of <span>{{getPageCount}}</span></p>
 
         <div class="result__view-toggle view-toggle">
 
@@ -143,30 +143,26 @@ export default {
   name: 'searchBox',
   data () {
     return {
-      query: null,
-      pageNumber: 0,
-      itemsPerPage: 6
+      query: null
     }
   },
+  mounted () {
+    this.setItemsPerPage(6)
+    this.setPageNumber(0)
+  },
   methods: {
-    ...mapActions(['searchRequest', 'changeViewMode', 'loadViewMode', 'fetchSelectedTrack']),
+    ...mapActions(['searchRequest', 'changeViewMode', 'loadViewMode', 'fetchSelectedTrack', 'setItemsPerPage', 'setPageNumber', 'nextPage', 'prevPage']),
     search (query) {
-      this.pageNumber = 0
+      this.setPageNumber(0)
       this.searchRequest(query)
-    },
-    nextPage () {
-      this.pageNumber++
-    },
-    prevPage () {
-      this.pageNumber--
     }
   },
   computed: {
-    ...mapGetters(['getAllTracks', 'getPaginatedTracks', 'getPageCount', 'getViewMode', 'getQueryFromHistory', 'getSelectedTrack']),
+    ...mapGetters(['getAllTracks', 'getPaginatedTracks', 'getPageCount', 'getViewMode', 'getQueryFromHistory', 'getSelectedTrack', 'getPageNumber', 'willPaginate'])
   },
   watch: {
     getQueryFromHistory: function (query) {
-      this.pageNumber = 0
+      this.setPageNumber(0)
       if (this.query !== query) {
         this.query = query
       }

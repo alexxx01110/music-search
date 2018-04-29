@@ -1,6 +1,20 @@
 <template>
   <section class="container-main__item panel item-box">
-    <h2>Result Box</h2>
+    <div class="item-box__header">
+      <h2>Result Box</h2>
+      <div class="item-box__checkbox-group">
+        <div class="item-box__checkbox checkbox-box">
+          <input type="checkbox"
+                 name="sequential-playback"
+                 class="visually-hidden"
+                 id="sequential-playback">
+          <label for="sequential-playback">
+            <span class="checkbox-box__indicator"></span>
+            Sequential playback
+          </label>
+        </div>
+      </div>
+    </div>
     <transition name="bounce">
 
       <div v-if="getSelectedTrack" class="item-box__container">
@@ -9,15 +23,15 @@
 
           <div class="item-box__wrapper" :key="showed">
 
-            <p class="image-box__picture">
+            <p class="item-box__picture">
 
-              <img class="image-box__image"
+              <img class="item-box__image"
                    :src="getSelectedTrack.artwork_url | imageSize('500x500')"
                    alt="Description">
 
             </p>
 
-            <div class="image-box__player">
+            <div class="item-box__player">
               <audio ref="audio"
                      @ended="nextTrack"
                      controls
@@ -38,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -51,7 +65,10 @@ export default {
     ...mapGetters(['getSelectedTrack'])
   },
   methods: {
-    nextTrack () { console.log('Nex track...') }
+    ...mapActions(['toNextTrack']),
+    nextTrack () {
+      this.toNextTrack()
+    }
   },
 
   watch: {

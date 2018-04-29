@@ -1,4 +1,11 @@
-.image-box__container {
+.item-box__header {
+  display: flex;
+  justify-content: space-between;
+}
+.item-box__checkbox-group {
+
+}
+.item-box__container {
 
 }
 
@@ -6,7 +13,7 @@
 
 }
 
-.image-box__player {
+.item-box__player {
   audio {
     width: 100%;
   }
