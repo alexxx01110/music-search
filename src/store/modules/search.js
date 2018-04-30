@@ -47,6 +47,7 @@ const actions = {
     commit('SET_PAGE_NUMBER', page)
   },
   changePlaybackMode ({state, commit}, mode) {
+    console.log(mode)
     commit('SET_PLAYBACK_MODE', mode)
   },
   nextPage ({state, commit}) {

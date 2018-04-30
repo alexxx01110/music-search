@@ -1,6 +1,12 @@
 .item-box__header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    margin: 0;
+    padding: 0;
+  }
 }
 .item-box__checkbox-group {
 

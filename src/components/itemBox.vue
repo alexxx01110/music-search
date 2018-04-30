@@ -2,15 +2,16 @@
   <section class="container-main__item panel item-box">
     <div class="item-box__header">
       <h2>Result Box</h2>
-      <div class="item-box__checkbox-group">
+      <div v-if="getSelectedTrack" class="item-box__checkbox-group">
         <div class="item-box__checkbox checkbox-box">
           <input type="checkbox"
                  name="sequential-playback"
                  class="visually-hidden"
-                 id="sequential-playback">
+                 id="sequential-playback"
+                 v-model="sequentialPlayback">
           <label for="sequential-playback">
             <span class="checkbox-box__indicator"></span>
-            Sequential playback
+            Sequential Playback
           </label>
         </div>
       </div>
@@ -62,12 +63,22 @@ export default {
   },
   name: 'itemBox',
   computed: {
-    ...mapGetters(['getSelectedTrack'])
+    ...mapGetters(['getSelectedTrack', 'getPlaybackMode']),
+    sequentialPlayback: {
+      get () {
+        return this.getPlaybackMode
+      },
+      set (value) {
+        this.changePlaybackMode(value)
+      }
+    }
   },
   methods: {
-    ...mapActions(['toNextTrack']),
+    ...mapActions(['toNextTrack', 'changePlaybackMode']),
     nextTrack () {
-      this.toNextTrack()
+      if (this.getPlaybackMode) {
+        this.toNextTrack()
+      }
     }
   },
 
